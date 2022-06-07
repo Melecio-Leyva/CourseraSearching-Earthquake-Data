@@ -10,7 +10,11 @@ public class EarthQuakeClient {
     double magMin) {
         ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
         // TODO
-
+        for(int i = 0;i<quakeData.size();i++){
+            if(quakeData.get(i).getMagnitude()>magMin){
+                answer.add(quakeData.get(i));
+            }
+        }    
         return answer;
     }
 
@@ -38,10 +42,14 @@ public class EarthQuakeClient {
     public void bigQuakes() {
         EarthQuakeParser parser = new EarthQuakeParser();
         //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
-        String source = "data/nov20quakedata.atom";
+        String source = "data/nov20quakedatasmall.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);
+        ArrayList<QuakeEntry> temp = filterByMagnitude(list,5.0);
         System.out.println("read data for "+list.size()+" quakes");
-
+        for(int i =0; i < temp.size();i++){
+            System.out.println(temp.get(i));
+        }
+        System.out.println("Found "+list.size()+" quakes that match that criteria");
     }
 
     public void closeToMe(){
